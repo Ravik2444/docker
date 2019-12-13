@@ -1,4 +1,55 @@
+What is Docker?
+Docker is a computer program that performs operating-system-level virtualization also known as containerization.
+
 Docker comes with two edition-
 - Community   : Free and open source.
 - Enterprise  : Chargeable with additional features.
 
+# sudo usermod -a -G docker user_name >> This will add user name in docker group, so sudo permission is not  required.
+# docker version > Display the docker version.
+# docker info
+# docker -v
+# docker run hello-world
+# docker cntainer run nginx
+# docker container stop nginx
+# docker container rm nginx
+> Stop the container before deleting it.
+
+Storage Drivers:
+Docker automatically selects a default storage driver that is compatible with our environment.
+- overlay2: File-based storage
+- devicemapper: better for lots of writing in the disk.
+Default storage driver of docker can be changed by updating the file in /etc/docker/daemon.json.
+
+{
+ "storage-driver": "devicemapper"
+}
+# Restart the docker service:  sudo systemctl restart docker.   >> check docker info and storage-driver.
+
+Docker command syntax:
+docker run [options] image[:TAG][COMMAND][ARG...]
+If we want to run NGINX with some specific version, we take help of tag.
+# docker run nginx:1.15.11    >>  1.15.11 is the version of the image that we want to download.
+# docker run busybox echo hello world!    >> busybox is an image to run the command.
+options:
+-d : Run container in detaiched mode. docker run command will be completed immediately.
+--name: specific name given by the user. default is given by the docker engine.
+docker container stop container_ID    >> stop the container.
+docker run -d --name nginx --restart no nginx
+--restart options:
+1. no(default) : never restart the container.
+2. on-failure: only if the container fails.
+3. always: always restart the container wheather it succeeds or fails. Also start the container on daemon startup.
+4. unless-stopped: Always restart the container wheather it succeeds or fails, and on daemon startup, unless the container was manually stopped.
+
+-p <host port>:<container port> : Expose the container port by mapping it to a port on the host. We can use -p multiple time to map multiple ports.
+--rm automatically remove the container when it exits. Can not be used with --restart.
+--memory 500M : This is the hard limit in memory reservation. Docker will not allow more than this memory.
+--memory-reservation: A soft limit on memory usage.
+
+
+
+
+
+
+docker info: Display all the docker info including storage drivers.
